@@ -1,8 +1,7 @@
 <?php
-
 class Barang extends DB
 {
-    function getBarangJoin($sort_by, $order)
+    function getBarangJoin($sort_by, $order)//mengambil data barang dan diurutkan berdasarkan kolom apa dan dengan urutan apa
     {
         $query = "SELECT * FROM barang 
                   JOIN merek ON barang.id_merek=merek.id_merek 
@@ -18,7 +17,7 @@ class Barang extends DB
         return $this->execute($query);
     }
 
-    function getBarangById($id)
+    function getBarangById($id)//mengambil data barang spesifik berdasarkan id
     {
         $query = "SELECT * FROM barang 
                   JOIN merek ON barang.id_merek=merek.id_merek 
@@ -27,7 +26,7 @@ class Barang extends DB
         return $this->execute($query);
     }
 
-    function searchBarang($keyword)
+    function searchBarang($keyword)//mencari data barang berdasarkan keyword
     {
         $query = "SELECT * FROM barang 
                   JOIN merek ON barang.id_merek=merek.id_merek 

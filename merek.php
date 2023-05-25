@@ -1,5 +1,5 @@
 <?php
-
+// ALUR PROGRAM SAMA PERSIS DENGAN 'kategori.php', SILAHKAN LIHAT FILE TERSEBUT UNTUK PENJELASAN ALUR YANG LEBIH LENGKAP
 include('config/db.php');
 include('classes/DB.php');
 include('classes/Merek.php');

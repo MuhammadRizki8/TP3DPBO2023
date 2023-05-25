@@ -12,9 +12,9 @@ $listBarang = new Barang($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAME); //ini 
 // buka koneksi
 $listBarang->open();
 
-// Sort options
-$sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'nama_barang'; // Default sort by nama_barang
-$order = isset($_GET['order']) ? $_GET['order'] : 'ASC'; // Default sorting order ASC
+// inisialisasi Sort option
+$sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'nama_barang'; // nilai Default sort by nama_barang
+$order = isset($_GET['order']) ? $_GET['order'] : 'ASC'; // nilai Default sorting order ASC
 
 // Sort options
 $sortLinks = array(
@@ -22,29 +22,24 @@ $sortLinks = array(
     'id_barang' => 'ID',
 );
 
-// Generate sort links HTML
+// buat sort link HTML
 $sortHtml = '';
 foreach ($sortLinks as $column => $label) {
-    // Determine the sorting order for the link
+    // tentukan order sortn=nya
     $nextOrder = ($sort_by === $column && $order === 'ASC') ? 'DESC' : 'ASC';
 
-    // Generate the link with the current sorting order and display the current order dynamically
+    // buat link ddengan order sorting sekarang dan display secara dinamik
     $sortHtml .= '<a href="?sort_by=' . $column . '&order=' . $nextOrder . '">' . $label . '</a>';
-
-    // Display the current sorting order dynamically
     if ($sort_by === $column) {
         $sortHtml .= ' (' . ($order === 'ASC' ? 'ASC' : 'DESC') . ')';
     }
-
-    // Add a separator between the links
+    // tambahkan separator
     $sortHtml .= ' | ';
 }
-
-// Remove the last separator
+// hapus separator terakhir
 $sortHtml = rtrim($sortHtml, ' | ');
 $sortHtml .= '</p>';
-
-// Get the sorted barang data
+// ambil data barang
 $listBarang->getBarangJoin($sort_by, $order);
 
 // Cari Barang
@@ -83,7 +78,6 @@ $listBarang->close();
 
 // Buat instance template
 $home = new Template('templates/skin.html');
-
 
 // simpan data ke template
 $home->replace('DATA_BARANG', $data);

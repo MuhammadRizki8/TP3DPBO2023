@@ -31,7 +31,9 @@ while ($k = $kategori->getResult()) {
 $dataMerek = null;
 $dataKategori = null;
 
+// jika menekan tombol save
 if (isset($_POST['btn-save'])) {
+    // jika data yang dikirim ada idnya, maka update data
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         if ($id > 0) {
@@ -47,7 +49,9 @@ if (isset($_POST['btn-save'])) {
                 </script>";
             }
         }
-    } else {
+    }
+    // jika data yang dikirim tidak ber-id, maka tambah data
+    else {
         if ($barang->addData($_POST, $_FILES) > 0) {
             echo "<script>
                 alert('Data berhasil ditambah!');
@@ -61,6 +65,7 @@ if (isset($_POST['btn-save'])) {
         }
     }
 }
+// jika menekan tombol hapus
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     if ($id > 0) {
@@ -81,7 +86,7 @@ if (isset($_GET['hapus'])) {
         }
     }
 }
-
+// set form , jika ada id yang diberi, maka siapkan form mode edit
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     if ($id > 0) {
@@ -97,7 +102,8 @@ if (isset($_GET['id'])) {
         $id_kategori = $row['id_kategori'];
         $deskripsi = $row['deskripsi'];
     }
-} else {
+} 
+else {//jika tidak, makaset form mode tambah
     $title = 'Tambah';
     $foto = 'default.jpg';
     $nama = '';
@@ -108,6 +114,7 @@ if (isset($_GET['id'])) {
     $deskripsi = '';
 }
 
+// ambil data merek dan kategori, seta tandai mana nilai yang harus ter-select
 foreach ($mrks as $m) {
     $selected = ($m['id_merek'] == $id_merek) ? 'selected' : '';
     $dataMerek .= '<option value="' . $m['id_merek'] . '" ' . $selected . '>' . $m['nama_merek'] . '</option>';
@@ -122,6 +129,7 @@ $barang->close();
 $merek->close();
 $kategori->close();
 
+//kirim data-data ke skinform
 $tambah = new Template('templates/skinform.html');
 $tambah->replace('DATA_TITLE', $title);
 $tambah->replace('DATA_NAMA', $nama);

@@ -26,7 +26,7 @@ if (isset($_POST['btn-cari'])) {
     // Metode menampilkan data Kategori
     $kategori->getKategori();
 }
-
+// simpan data barang ke variabel
 $data = null;
 while ($row = $kategori->getResult()) {
     $data .= '<tr>
@@ -38,13 +38,13 @@ while ($row = $kategori->getResult()) {
     </tr>';
     $no++;
 }
-
+// default value button dan title dari form
 $btn = 'Submit';
 $title = '';
-
+// update dan create
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    if ($id > 0) {
+    if ($id > 0) {//jika id yang dikirim besar dari 0, maka update data
         if (isset($_POST['submit'])) {
             if ($kategori->updateKategori($id, $_POST) > 0) {
                 echo "<script>
@@ -58,17 +58,17 @@ if (isset($_GET['id'])) {
             </script>";
             }
         }
-
+        // ambil data yang akan diupdate
         $kategori->getKategoriById($id);
         $row = $kategori->getResult();
-
+        //siapkan form updatenya
         $dataUpdate = $row['nama_kategori'];
         $btn = 'Simpan Perubahan';
         $title = 'Ubah';
 
         $view->replace('DATA_VAL_UPDATE', $dataUpdate);
     }
-    else{
+    else{//jika tidak, maka masuk ke tambah data
         if (isset($_POST['submit'])) {
             if ($kategori->addKategori($_POST) > 0) {
                 echo "<script>
@@ -82,12 +82,12 @@ if (isset($_GET['id'])) {
                 </script>";
             }
         }
-    
+        // siapkan form mode tambah data
         $btn = 'Tambah';
         $title = 'Tambah';
     }
 }
-
+// jika menekan tombol hapus
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     if ($id > 0) {
@@ -106,7 +106,7 @@ if (isset($_GET['hapus'])) {
 }
 
 $kategori->close();
-
+// passing data ke view kategori
 $view->replace('DATA_MAIN_TITLE', $mainTitle);
 $view->replace('DATA_TABEL_HEADER', $header);
 $view->replace('DATA_TITLE', $title);
